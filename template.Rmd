@@ -6,3 +6,59 @@ output: github_document
 I'm an R Markdown document! 
 
 ## Data Import: CSVs
+```{r echo=FALSE}
+install.packages("tidyverse")
+library(tidyverse)
+library(haven)
+```
+
+Let's import data using 'readr' package
+```{r}
+litters_df= read_csv("data_import_examples/FAS_litters.csv")
+litters_df= janitor:: clean_names(litters_df)
+```
+```{r, eval=False}
+view(litters_df)
+```
+
+```{r}
+# in the skimr package, use skim function (::)
+skimr::skim(litters_df)
+```
+
+```{r missing data, skip}
+read_csv("data_import_examples/FAS_litters.csv", na=c("", "NA",999,88), skip=2)
+```
+
+##other file formats
+
+read excel package
+```{r}
+library(readxl)
+mlb_df=read_excel("data_import_examples/mlb11.xlsx")
+# you can choose what sheet you want the data from
+```
+
+
+```{r}
+lotr_words_df=
+  read_excel("data_import_examples/LotR_Words.xlsx",
+             range= "B3:D6")
+```
+
+## more formats
+Read in a SAS format
+
+```{r}
+pulse_df=read_sas("data_import_examples/public_pulse_data.sas7bdat")
+```
+
+```{r data export}
+write_csv(lotr_words_df,file="data_import_examples/lotr_words_df.csv")
+```
+
+##why not base r??
+```{r}
+dont_do_this_df= read.csv("data_import_examples/FAS_litters.csv")
+```
+
